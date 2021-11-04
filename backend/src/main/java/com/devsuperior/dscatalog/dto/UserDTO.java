@@ -11,14 +11,14 @@ import com.devsuperior.dscatalog.entities.User;
 
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long id;
 	
-	@NotBlank(message = "Campo Obrigatório")
-	private String firstName; 
+	@NotBlank(message = "Campo obrigatório")
+	private String firstName;
 	private String lastName;
-	
-	@Email(message = "Favor entrar e-mail válido")
+
+	@Email(message = "Favor entrar um email válido")
 	private String email;
 	
 	Set<RoleDTO> roles = new HashSet<>();
