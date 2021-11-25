@@ -3,6 +3,7 @@
 }
 
 .btn-container button {
+    width: calc(100% - 50px);
     border-radius: 10px 0 0 10px;
 }
 
@@ -33,5 +34,9 @@
     .btn-icon-container {
         width: 70px;
         height: 70px;
+    }
+
+    .btn-container button {
+        width: calc(100% - 70px);
     }
 }
