@@ -74,8 +74,8 @@ export const getAuthData = () => {
 
 export const removeAuthData = () => {
   localStorage.removeItem(tokenKey);
-}
- 
+};
+
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
@@ -111,8 +111,28 @@ export const getTokenData = (): TokenData | undefined => {
   }
 };
 
-export const isAuthenticated = () : boolean => {
+export const isAuthenticated = (): boolean => {
   const TokenData = getTokenData();
 
-  return (TokenData && TokenData.exp * 1000 > Date.now()) ? true : false; 
-}
+  return TokenData && TokenData.exp * 1000 > Date.now() ? true : false;
+};
+
+export const hasAnyRoles = (roles: Role[]): boolean => {
+  if (roles.length === 0) {
+    return true;
+  }
+
+  const TokenData = getTokenData();
+
+  if (TokenData !== undefined) {
+    for (var i = 0; i < roles.length; i++) {
+      if (TokenData.authorities.includes(roles[1])) {
+        return true;
+      }
+    }
+
+    // alternativa para logica: return roles.some(role => tokenData.authorities.includes(role)); 
+  }
+
+  return false;
+};
