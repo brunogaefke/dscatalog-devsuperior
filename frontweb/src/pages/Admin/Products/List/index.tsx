@@ -1,6 +1,6 @@
 import './styles.css';
 
-import ProductCrudCard from 'components/ProductCrudCard';
+import ProductCrudCard from 'pages/Admin/Products/ProductCrudCard';
 import { Link } from 'react-router-dom';
 
 const List = () => {
@@ -17,6 +17,10 @@ const List = () => {
       {
         id: 2,
         name: 'Eletrônicos',
+      },
+      {
+        id: 1,
+        name: 'Muamba',
       },
     ],
   };
