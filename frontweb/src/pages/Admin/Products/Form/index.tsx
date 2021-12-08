@@ -6,7 +6,6 @@ import { requestBackend } from 'util/requests';
 import './styles.css';
 
 const Form = () => {
-
   const history = useHistory();
 
   const {
@@ -16,10 +15,12 @@ const Form = () => {
   } = useForm<Product>();
 
   const onSubmit = (formData: Product) => {
-
-    const data = { ...formData,
-      imgUrl: "https://i.pinimg.com/236x/47/c4/d8/47c4d89eeaee62db92edc2a62d8a74df.jpg",
-      categories: [ {id: 1, name: ""} ]}
+    const data = {
+      ...formData,
+      imgUrl:
+        'https://i.pinimg.com/236x/47/c4/d8/47c4d89eeaee62db92edc2a62d8a74df.jpg',
+      categories: [{ id: 1, name: '' }],
+    };
 
     const config: AxiosRequestConfig = {
       method: 'POST',
@@ -28,14 +29,14 @@ const Form = () => {
       withCredentials: true,
     };
 
-    requestBackend(config).then((response) => {
-      console.log(response.data);
+    requestBackend(config).then(() => {
+      history.push('/admin/products');
     });
   };
 
   const handleCancel = () => {
-    history.push("/admin/products");
-  }
+    history.push('/admin/products');
+  };
 
   return (
     <div className="product-crud-container">
@@ -87,7 +88,7 @@ const Form = () => {
                     required: 'Campo obrigatório.',
                   })}
                   className={`form-control base-input h-auto ${
-                    errors.name? 'is-invalid' : ''
+                    errors.name ? 'is-invalid' : ''
                   }`}
                   placeholder="Descrição"
                   name="description"
@@ -100,8 +101,9 @@ const Form = () => {
           </div>
 
           <div className="product-crud-buttons-container">
-            <button className="btn btn-outline-danger product-crud-button"
-            onClick={handleCancel}
+            <button
+              className="btn btn-outline-danger product-crud-button"
+              onClick={handleCancel}
             >
               CANCELAR
             </button>
