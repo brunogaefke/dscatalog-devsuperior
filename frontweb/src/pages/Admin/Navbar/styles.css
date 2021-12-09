@@ -1,10 +1,6 @@
-ul {
+.admin-nav-itens-container {
     display: flex;
     justify-content: space-around;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-
 }
 
 .admin-nav-container {
@@ -43,7 +39,7 @@ ul {
 }
 
 @media (min-width: 1200px) {
-    ul {
+    .admin-nav-itens-container {
         justify-content: unset;
         flex-direction: column;
 }
