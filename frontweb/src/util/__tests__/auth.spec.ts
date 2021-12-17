@@ -18,7 +18,7 @@ describe('hasAnyRoles tests', () => {
         })
 
         const result = hasAnyRoles(['ROLE_ADMIN']);
-        expect(result).toEqual(true);
+        expect(result).toEqual(false);
     });
 })
 
