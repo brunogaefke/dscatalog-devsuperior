@@ -3,7 +3,7 @@ import Form from "../Form";
 import { Router, useParams } from "react-router-dom";
 import history from 'util/history';
 import userEvent from "@testing-library/user-event";
-import { server } from "./fixtures";
+import { productResponse, server } from "./fixtures";
 import selectEvent from "react-select-event";
 import { ToastContainer } from "react-toastify";
 
@@ -24,7 +24,7 @@ describe('Product form creat tests', () => {
         })
     })
 
-    test('should render Form', async () => {
+    test('should show toast and redirect when submit form correctly', async () => {
         render(
 
             <Router history={history}>
@@ -58,6 +58,75 @@ describe('Product form creat tests', () => {
 
         expect(history.location.pathname).toEqual('/admin/products');
     });
+
+    test('should show five validation messages when just click submit', async () => {
+        render(
+
+            <Router history={history}>
+                <Form />
+            </Router>
+
+        )
+
+        const submitButton = screen.getByRole('button', { name: /salvar/i })
+
+        userEvent.click(submitButton);
+
+        await waitFor(() => {
+
+            const messages = screen.getAllByText('Campo obrigatório.');
+            expect(messages).toHaveLength(4);
+        })
+    });
 });
 
+describe('Product form update tests', () => {
 
+    beforeEach(() => {
+        (useParams as jest.Mock).mockReturnValue({
+            productId: '2'
+        })
+    })
+
+    test('should show toast and redirect when submit form correctly', async () => {
+        render(
+
+            <Router history={history}>
+                <Form />
+                <ToastContainer />
+            </Router>
+
+        )
+
+        await waitFor(() => {
+            const nameImput = screen.getByTestId('name');
+            const priceImput = screen.getByTestId('price');
+            const imgUrlImput = screen.getByTestId('imgUrl');
+            const descriptionImput = screen.getByTestId('description');
+
+            const formElement = screen.getByTestId('form');
+    
+            expect(nameImput).toHaveValue(productResponse.name)
+            expect(priceImput).toHaveValue(String(productResponse.price))
+            expect(imgUrlImput).toHaveValue(productResponse.imgUrl)
+            expect(descriptionImput).toHaveValue(productResponse.description)
+
+            const ids = productResponse.categories.map(x => String(x.id))
+            expect(formElement).toHaveFormValues({categories: ids})
+        })
+
+        const submitButton = screen.getByRole('button', { name: /salvar/i })
+
+        userEvent.click(submitButton);
+
+        await waitFor(() => {
+
+            const toastElement = screen.getByText('Produto cadastrado com sucesso');
+            expect(toastElement).toBeInTheDocument();
+        })
+
+        expect(history.location.pathname).toEqual('/admin/products');
+
+    });
+
+});
